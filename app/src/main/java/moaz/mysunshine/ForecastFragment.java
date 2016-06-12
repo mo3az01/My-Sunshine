@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -40,7 +43,24 @@ public class ForecastFragment extends Fragment {
         ListView list = (ListView) rootView.findViewById(R.id.listview_forecast);
         list.setAdapter(adapter);
 
+        setHasOptionsMenu(true);
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.forecastfragment, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                new FetchWeatherTask().execute();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public class FetchWeatherTask extends AsyncTask<Void, Void, Void> {
@@ -60,8 +80,9 @@ public class ForecastFragment extends Fragment {
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are available at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
+                String OPEN_WEATHER_MAP_API_KEY = "b948c32b38fe0eddc37e73e394d64503";
                 String baseUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7";
-                String apiKey = "&appid=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
+                String apiKey = "&appid=" + OPEN_WEATHER_MAP_API_KEY;
                 URL url = new URL(baseUrl.concat(apiKey));
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -89,6 +110,8 @@ public class ForecastFragment extends Fragment {
                     return null;
                 }
                 forecastJsonStr = buffer.toString();
+
+                Log.w(Log_Tag,"Forecast JSON String : "+forecastJsonStr);
             } catch (IOException e) {
                 Log.e("PlaceholderFragment", "Error ", e);
                 // If the code didn't successfully get the weather data, there's no point in attempting
