@@ -1,5 +1,6 @@
 package moaz.mysunshine;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -53,6 +55,16 @@ public class ForecastFragment extends Fragment {
         ListView list = (ListView) rootView.findViewById(R.id.listview_forecast);
         list.setAdapter(adapter);
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Toast.makeText(getActivity(),adapter.getItem(i),Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getActivity(),DetialActivity.class)
+                        .putExtra(Intent.EXTRA_TEXT,adapter.getItem(i));
+                startActivity(intent);
+            }
+        });
         setHasOptionsMenu(true);
         return rootView;
     }
