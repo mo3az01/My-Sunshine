@@ -21,17 +21,6 @@
     <string name="pref_unit_imperial_value">imperial</string>
     <string name="pref_unit_metric_label">Metric</string>
     <string name="pref_unit_imperial_label">Imperial</string>
-
-
-    <string-array name="pref_unit_entries">
-        <item>@string/pref_unit_metric_label</item>
-        <item>@string/pref_unit_imperial_label</item>
-    </string-array>
-
-    <string-array name="pref_unit_entry_values">
-        <item>@string/pref_unit_metric_value</item>
-        <item>@string/pref_unit_imperial_value</item>
-    </string-array>
-
+    <string name="action_view_location">View Location</string>
 
 </resources>
