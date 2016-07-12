@@ -170,7 +170,7 @@ public class TestDb extends AndroidTestCase {
 
         // First step: Get reference to writable database
         ContentValues contentValues = TestUtilities.createWeatherValues(locationRowId);
-        long retRes = db.insert(WeatherContract.WeatherEntry.TABLE_NAME,null,contentValues);
+        long retRes = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, contentValues);
         // Create ContentValues of what you want to insert
         // (you can use the createWeatherValues TestUtilities function if you wish)
         db.close();
@@ -184,7 +184,7 @@ public class TestDb extends AndroidTestCase {
 
         // Move the cursor to a valid database row
 
-        TestUtilities.validateCurrentRecord("Error ContentValuesof weather",c,contentValues);
+        TestUtilities.validateCurrentRecord("Error ContentValuesof weather", c, contentValues);
         // Validate data in resulting Cursor with the original ContentValues
         // (you can use the validateCurrentRecord function in TestUtilities to validate the
         // query if you like)

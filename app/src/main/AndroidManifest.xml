@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -43,6 +44,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="moaz.mysunshine.MainActivity" />
         </activity>
+
+        <provider android:authorities="moaz.mysunshine"
+            android:name=".data.WeatherProvider"/>
     </application>
 
 </manifest>
