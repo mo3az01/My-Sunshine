@@ -10,22 +10,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements ForecastFragment.Callback {
 
     public static final String FORECAST_FRAGMENT_TAG = "forecast_fragment";
+    public static final String DETAILS_FRAGMENT_TAG = "details_fragment";
+
 
     private String mLocation;
+    private boolean mTwoPaneUI = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mLocation = Utility.getPreferredLocation(this);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new ForecastFragment(), FORECAST_FRAGMENT_TAG)
-                    .commit();
+
+        if (findViewById(R.id.details_container) != null) {
+            mTwoPaneUI = true;
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.details_container, new DetailFragment(), DETAILS_FRAGMENT_TAG)
+                        .commit();
+            }
+        } else {
+            mTwoPaneUI = false;
+            getSupportActionBar().setElevation(0f);
         }
+
+        ForecastFragment forecastFragment = (ForecastFragment)getSupportFragmentManager().findFragmentById(R.id.container);
+        forecastFragment.setUseTodayLayout(!mTwoPaneUI);
     }
 
     @Override
@@ -57,10 +70,16 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!mLocation.equals(Utility.getPreferredLocation(this))) {
-            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentByTag(FORECAST_FRAGMENT_TAG);
+        String location = Utility.getPreferredLocation(this);
+        if (!mLocation.equals(location)) {
+            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentById(R.id.container);
             ff.onLocationChange();
-            mLocation = Utility.getPreferredLocation(this);
+            DetailFragment df = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DETAILS_FRAGMENT_TAG);
+            if (null != df) {
+                df.onLocationChanged(location);
+            }
+
+            mLocation = location;
         }
     }
 
@@ -73,6 +92,22 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(geoLocation);
         if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+
+
+    }
+
+    @Override
+    public void onItemSelected(Uri dateUri) {
+        if (mTwoPaneUI) {
+            Bundle args = new Bundle();
+            args.putParcelable(DetailFragment.DETAIL_URI, dateUri);
+            DetailFragment df = new DetailFragment();
+            df.setArguments(args);
+            getSupportFragmentManager().beginTransaction().replace(R.id.details_container, df).commit();
+        } else {
+            Intent intent = new Intent(this, DetialActivity.class).setData(dateUri);
             startActivity(intent);
         }
     }

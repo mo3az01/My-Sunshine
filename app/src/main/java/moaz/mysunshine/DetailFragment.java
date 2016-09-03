@@ -31,6 +31,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     public static final String TAG = DetailFragment.class.getSimpleName();
     public static final String AppName = "#SunshineApp";
+    public static final String DETAIL_URI = "detail_uri";
+
     private String mForecast;
     private Uri mLoaderUri;
     Activity mContext;
@@ -84,6 +86,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Bundle args = getArguments();
+        if (args != null)
+            mLoaderUri = args.getParcelable(DETAIL_URI);
+
         mContext = getActivity();
         View rootView = inflater.inflate(R.layout.fragment_detial, container, false);
         mIconView = (ImageView) rootView.findViewById(R.id.detail_icon);
@@ -128,9 +135,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        Intent intent = getActivity().getIntent();
-        if (intent != null) {
-            mLoaderUri = intent.getData();
+        if (mLoaderUri != null) {
             return new CursorLoader(mContext, mLoaderUri, DETAIL_COLUMNS, null, null, null);
         }
 
@@ -158,7 +163,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         // Read description from cursor and update view
         String description = data.getString(COL_WEATHER_DESC);
         mDescriptionView.setText(description);
-
+        mIconView.setContentDescription(description);
         // Read high temperature from cursor and update view
         boolean isMetric = Utility.isMetric(getActivity());
 
@@ -192,6 +197,18 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             mShareActionProvider.setShareIntent(createShareForecastIntent());
         }
     }
+
+    void onLocationChanged(String newLocation) {
+        // replace the uri, since the location has changed
+        Uri uri = mLoaderUri;
+        if (null != uri) {
+            long date = WeatherContract.WeatherEntry.getDateFromUri(uri);
+            Uri updatedUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(newLocation, date);
+            mLoaderUri = updatedUri;
+            getLoaderManager().restartLoader(DETAIL_LOADER, null, this);
+        }
+    }
+
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {

@@ -1,0 +1,25 @@
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:weightSum="2"
+    tools:context=".MainActivity"
+    tools:ignore="MergeRootFrame"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <fragment
+        android:name="moaz.mysunshine.ForecastFragment"
+        tools:layout="@layout/fragment_main"
+        android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent" />
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_weight="1"
+        android:id="@+id/details_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

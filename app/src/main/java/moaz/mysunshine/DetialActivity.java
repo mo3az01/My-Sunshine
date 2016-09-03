@@ -17,8 +17,12 @@ public class DetialActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detial);
         if (savedInstanceState == null) {
+            Bundle args = new Bundle();
+            args.putParcelable(DetailFragment.DETAIL_URI, getIntent().getData());
+            DetailFragment df = new DetailFragment();
+            df.setArguments(args);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new DetailFragment())
+                    .add(R.id.details_container, df)
                     .commit();
         }
     }
