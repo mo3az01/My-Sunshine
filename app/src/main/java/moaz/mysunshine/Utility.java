@@ -36,6 +36,12 @@ public class Utility {
                 context.getString(R.string.pref_location_default));
     }
 
+    public static String getPreferredUnits(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(context.getString(R.string.pref_unit_key),
+                context.getString(R.string.pref_unit_metric_value));
+    }
+
     public static boolean isMetric(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString(context.getString(R.string.pref_unit_key),
@@ -176,6 +182,7 @@ public class Utility {
         }
         return String.format(context.getString(windFormat), windSpeed, direction);
     }
+
     /* Helper method to provide the icon resource id according to the weather condition id returned
     * by the OpenWeatherMap call.
             * @param weatherId from OpenWeatherMap API response
@@ -213,6 +220,7 @@ public class Utility {
     /**
      * Helper method to provide the art resource id according to the weather condition id returned
      * by the OpenWeatherMap call.
+     *
      * @param weatherId from OpenWeatherMap API response
      * @return resource id for the corresponding image. -1 if no relation is found.
      */
