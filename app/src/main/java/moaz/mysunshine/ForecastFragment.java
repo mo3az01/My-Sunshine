@@ -1,9 +1,6 @@
 package moaz.mysunshine;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,8 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import moaz.mysunshine.data.WeatherContract;
-import moaz.mysunshine.service.SunshineService;
-
+import moaz.mysunshine.sync.SunshineSyncAdapter;
 /**
  * Created by XKCL0301 on 6/8/2016.
  */
@@ -148,14 +144,15 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void updateWeatherData() {
-        Intent alarmIntent = new Intent(mContext, SunshineService.AlarmReceiver.class);
-        alarmIntent.putExtra(SunshineService.LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(mContext));
-        alarmIntent.putExtra(SunshineService.UNIT_QUERY_EXTRA, Utility.getPreferredUnits(mContext));
+//        Intent alarmIntent = new Intent(mContext, SunshineService.AlarmReceiver.class);
+//        alarmIntent.putExtra(SunshineService.LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(mContext));
+//        alarmIntent.putExtra(SunshineService.UNIT_QUERY_EXTRA, Utility.getPreferredUnits(mContext));
+//
+//        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, alarmIntent, PendingIntent.FLAG_ONE_SHOT);
+//        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+//        am.set(AlarmManager.RTC_WAKEUP, System.cu rrentTimeMillis() + 5000, pi);
 
-        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, alarmIntent, PendingIntent.FLAG_ONE_SHOT);
-        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pi);
-
+        SunshineSyncAdapter.syncImmediately(getActivity());
 //        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 //        String location = sharedPreferences.getString(getString(R.string.pref_location_key),
 //                getString(R.string.pref_location_default));

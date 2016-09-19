@@ -42,4 +42,6 @@
     <string name="pref_unit_imperial_label">Imperial</string>
     <string name="action_view_location">View Location</string>
     <string name="action_share">Share</string>
+    <string name="sync_account_type">mysunshine.moaz</string>
+    <string name="content_authority">moaz.mysunshine</string>
 </resources>
