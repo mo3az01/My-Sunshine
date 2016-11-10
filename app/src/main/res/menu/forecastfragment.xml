@@ -1,6 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<item android:id="@+id/action_refresh" android:title="@string/refresh_option_title"
-    android:orderInCategory="1" android:showAsAction="never"
-    />
+    <item
+        android:id="@+id/action_view_location"
+        android:title="@string/action_view_location"
+        android:orderInCategory="101"
+        app:showAsAction="never" />
 </menu>

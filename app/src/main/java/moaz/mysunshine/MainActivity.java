@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import moaz.mysunshine.sync.SunshineSyncAdapter;
+
 
 public class MainActivity extends ActionBarActivity implements ForecastFragment.Callback {
 
@@ -42,6 +44,12 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        SunshineSyncAdapter.initializeSyncAdapter(this);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -58,9 +66,6 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
         switch (id) {
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            case R.id.action_view_location:
-                showMap();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

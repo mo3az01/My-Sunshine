@@ -13,14 +13,20 @@
         android:padding="@dimen/activity_vertical_margin">
 
         <TextView
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/detail_day_textview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
 
         <TextView
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/detail_date_textview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey_700"
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -37,18 +43,21 @@
 
 
                 <TextView
+                    android:fontFamily="sans-serif-condensed"
                     android:id="@+id/detail_high_textview"
-
                     android:gravity="center_vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="96sp" />
 
                 <TextView
                     android:id="@+id/detail_low_textview"
-
+                    android:fontFamily="sans-serif-condensed"
                     android:gravity="center_vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey_700"
+                    android:textSize="48sp" />
 
             </LinearLayout>
 
@@ -67,11 +76,13 @@
                     android:src="@drawable/ic_launcher" />
 
                 <TextView
-                    android:id="@+id/detail_forecast_textview"
                     android:text="@string/weather"
-
+                    android:fontFamily="sans-serif-condensed"
+                    android:id="@+id/detail_forecast_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey_700"
+                    android:textAppearance="?android:textAppearanceLarge" />
             </LinearLayout>
 
         </LinearLayout>
@@ -82,19 +93,25 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:layout_marginTop="4dp"
                 android:id="@+id/detail_humidity_textview"
+                android:textAppearance="?android:textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:layout_marginTop="4dp"
+                android:textAppearance="?android:textAppearanceLarge"
                 android:id="@+id/detail_wind_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:layout_marginTop="4dp"
                 android:id="@+id/detail_pressure_textview"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:textAppearanceLarge" />
         </LinearLayout>
 
     </LinearLayout>
